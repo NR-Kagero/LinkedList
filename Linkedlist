@@ -1,0 +1,135 @@
+using namespace std;
+struct node
+{
+    int va;
+    node *next=NULL;
+};
+
+class linkedList
+{
+private :
+    node *root;
+    int len;
+public:
+    linkedList(int v)
+    {
+        root=new node;
+        root->va=v;
+        len=1;
+    }
+    void addNode(int v)
+    {
+        node *n=new node;
+        n->va=v;
+        n->next=NULL;
+        findLast(root)->next=n;
+        len++;
+    }
+    node *findLast(node *ro)
+    {
+        node *d;
+        while(ro->next!=NULL)
+        {
+            ro=ro->next;
+        }
+        d=ro;
+        return d;
+    }
+    void removeNode(int val)
+    {
+        node *dum,*del;
+        dum=root;
+        while(dum->next->va!=val)
+        {
+            dum=dum->next;
+        }
+        del=dum->next;
+        dum->next=dum->next->next;
+        len--;
+    }
+    string findNum(int val)
+    {
+        node *dum;
+        dum=root;
+        while(dum!=NULL)
+        {
+            if(dum->va==val)
+            {
+                return "True";
+            }
+            dum=dum->next;
+
+        }
+        return "False";
+    }
+    int findIndex(int val)
+    {
+        node *dum;
+        dum=root;
+        int index=0;
+        while(dum!=NULL)
+        {
+            if(dum->va==val)
+            {
+                return index;
+            }
+            index++;
+            dum=dum->next;
+
+        }
+        return -1;
+    }
+    void sorList()
+    {
+        node *dum1,*dum2;
+        dum1=root;
+        while(dum1->next!=NULL)
+        {
+            dum2=dum1;
+            while(dum2->next!=NULL)
+            {
+                if(dum2->va>dum2->next->va)
+                {
+                    int v=dum2->va;
+                    dum2->va=dum2->next->va;
+                    dum2->next->va=v;
+                }
+                dum2=dum2->next;
+            }
+            dum1=dum1->next;
+        }
+    }
+    void clearList()
+    {
+        node *dum,*de;
+        dum=root;
+        while(dum!=NULL)
+        {
+            de=dum;
+            dum=dum->next;
+            delete de;
+        }
+        len=0;
+        root=NULL;
+    }
+    void printList()
+    {
+        node *dum=root;
+        while(dum!=NULL)
+        {
+            cout<<dum->va<<endl;
+            dum=dum->next;
+        }
+        cout<<"length = "<<len<<endl;
+    }
+    ~linkedList(){
+        node *r,*de;
+        r=root;
+        while(r!=NULL){
+            de=r;
+            r=r->next;
+            delete de;
+        }
+        cout<<"Linked list deleted "<<endl;
+    }
+};
